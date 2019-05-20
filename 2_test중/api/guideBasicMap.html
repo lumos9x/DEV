@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>simpleMap</title>
+        <script src="https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=e23cbdb5-cddc-4a26-a419-2c99893b450a"></script>
+        <script type="text/javascript">
+			function initTmap(){
+				var map = new Tmap.Map({
+          div : 'map_div',
+        	width : "100%",
+        	height : "400px",
+				});
+				map.setCenter(new Tmap.LonLat("126.986072", "37.570028").transform("EPSG:4326", "EPSG:3857"), 15);
+        routeLayer = new Tmap.Layer.Vector("route");
+        map.addLayer(routeLayer);
+
+        markerStartLayer = new Tmap.Layer.Markers("start");
+        markerEndLayer = new Tmap.Layer.Markers("end");
+        markerWaypointLayer = new Tmap.Layer.Markers("waypoint");
+        markerWaypointLayer2 = new Tmap.Layer.Markers("waypoint2");
+        pointLayer = new Tmap.Layer.Vector("point");
+
+        map.addLayer(markerStartLayer);
+
+        var size = new Tmap.Size(24, 38);
+        var offset = new Tmap.Pixel(-(size.w / 2), -size.h);
+        var icon = new Tmap.IconHtml("<img src='http://tmapapis.sktelecom.com/upload/tmap/marker/pin_r_m_s.png' />", size, offset);
+        var marker_s = new Tmap.Marker(new Tmap.LonLat("127.02810900563199", "37.519892712436906").transform("EPSG:4326", "EPSG:3857"), icon);
+        markerStartLayer.addMarker(marker_s);
+
+        // 도착
+        map.addLayer(markerEndLayer);
+
+        var size = new Tmap.Size(24, 38);
+        var offset = new Tmap.Pixel(-(size.w / 2), -size.h);
+        var icon = new Tmap.IconHtml("<img src='http://tmapapis.sktelecom.com/upload/tmap/marker/pin_r_m_e.png' />", size, offset);
+        var marker_e = new Tmap.Marker(new Tmap.LonLat("127.13281976335786", "37.52130314703887").transform("EPSG:4326", "EPSG:3857"), icon);
+        markerEndLayer.addMarker(marker_e);
+
+        //경유지 마커 제거
+        markerWaypointLayer.clearMarkers();
+        markerWaypointLayer2.clearMarkers();
+
+        // 3. 경유지 심볼 찍기
+        map.addLayer(markerWaypointLayer);
+
+        var size = new Tmap.Size(24, 38);
+        var offset = new Tmap.Pixel(-(size.w / 2), -size.h);
+        var icon = new Tmap.IconHtml("<img src='http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_p.png' />", size, offset);
+        var marker = new Tmap.Marker(new Tmap.LonLat("127.04724656694417","37.524162226778515").transform("EPSG:4326", "EPSG:3857"), icon);
+        markerWaypointLayer.addMarker(marker);
+
+        var size = new Tmap.Size(24, 38);
+        var offset = new Tmap.Pixel(-(size.w / 2), -size.h);
+        var icon = new Tmap.IconHtml("<img src='http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_p.png' />", size, offset);
+        var marker = new Tmap.Marker(new Tmap.LonLat("127.10887300128256","37.5289781669373").transform("EPSG:4326", "EPSG:3857"), icon);
+        markerWaypointLayer.addMarker(marker);
+
+        markerWaypointLayer2.clearMarkers();
+			}
+		</script>
+    </head>
+    <body onload="initTmap()">
+        <div id="map_div">
+        </div>
+    </body>
+</html>
